@@ -1,0 +1,59 @@
+/* Host markup is in the README. CSS declares presentation, not loops. */
+:root {
+  --ink: #183153;
+  --surface: #f2f5fa;
+  --space: 1rem;
+}
+
+/* Selector lists share declarations; custom properties inherit. */
+.reading-card,
+.reading-card * {
+  box-sizing: border-box;
+}
+
+.reading-card {
+  color: var(--ink);
+  background: var(--surface);
+  font: 1rem/1.5 system-ui, sans-serif;
+  padding: var(--space);
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  max-width: 40rem;
+}
+
+.reading-card h2 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  margin-block: 0 0.5rem;
+}
+
+.reading-card ul {
+  display: grid;
+  gap: var(--space);
+  padding-inline-start: 1.5rem;
+}
+
+/* Attribute and state selectors respond to document and control state. */
+.reading-card [data-read="true"] {
+  text-decoration: line-through;
+}
+
+.reading-card a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+.reading-card a:hover {
+  text-decoration-thickness: 0.15em;
+}
+
+.reading-card a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* A media query conditionally applies rules; repeat/minmax are CSS functions. */
+@media (min-width: 40rem) {
+  .reading-card ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

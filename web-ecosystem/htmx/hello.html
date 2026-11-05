@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <title>Hello Programming</title>
+  </head>
+  <body>
+    <button hx-get="/hello" hx-target="#message">Say hello</button>
+    <p id="message">Hello, World!</p>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+SELECT ?message ?score ?nextScore ?color ?length
+WHERE {
+
+    #
+    #    Type Systems & Variables
+    #
+    # Variables name solution bindings; literals carry RDF datatypes.
+    BIND(10 AS ?score)
+    BIND("Hello, World!" AS ?message)
+
+    #
+    #    Control Flow Operations
+    #
+    # FILTER restricts solutions and IF selects an expression result.
+    BIND(IF(?score >= 10, "pass", "retry") AS ?result)
+    FILTER(?score > 0)
+
+    #
+    #    Execution Blocks
+    #
+    # Braces group graph patterns; they do not define imperative function bodies.
+    { VALUES ?value { 1 2 3 } }
+
+    #
+    #    Code Health & Documentation
+    #
+    # SPARQL uses # line comments; adjacent comment lines explain a longer query.
+    # A single-line comment.
+    # A second line documents assumptions about bindings.
+
+    #
+    #    Built-In Collections
+    #
+    # VALUES supplies a table of inline solution bindings rather than a mutable array.
+    VALUES ?color { "red" "blue" }
+
+    #
+    #    Data Mutability
+    #
+    # BIND introduces a new variable; it does not reassign an existing binding in the same scope.
+    BIND(?score + 1 AS ?nextScore)
+
+    #
+    #    Access & Encapsulation
+    #
+    # Projection controls returned variables; access control belongs to the endpoint or dataset.
+    BIND("not projected" AS ?internalNote)
+
+    #
+    #    Design Paradigms & Patterns
+    #
+    # OPTIONAL composes a pattern whose missing match does not remove the outer solution.
+    OPTIONAL { VALUES ?extra { "optional value" } }
+
+    #
+    #    Memory Management
+    #
+    # The processor owns query memory and intermediate bindings.
+    BIND(STRLEN(?color) AS ?length)
+
+    #
+    #    Concurrency & Parallelism
+    #
+    # The query does not launch threads; endpoint scheduling and physical plans determine parallel execution.
+    BIND(?value * 2 AS ?doubled)
+
+    #
+    #    Performance Optimization
+    #
+    # Constrain intermediate results and inspect the processor's plan on real data.
+    FILTER(?value > 1)
+
+}
+ORDER BY ?color
+LIMIT 10

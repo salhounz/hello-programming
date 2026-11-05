@@ -1,0 +1,58 @@
+# Request document; the host must implement the schema below.
+# SDL reference (comments, not an executable server):
+# enum Category { FICTION SCIENCE }
+# type Book {
+#   id: ID!
+#   title: String!
+#   copies: Int!
+#   note: String
+#   category: Category!
+# }
+# type Query {
+#   books(category: Category!, first: Int!): [Book!]!
+#   book(id: ID!): Book
+# }
+# The books resolver filters by category and returns at most first items.
+# The book resolver looks up an ID and returns null when it is absent.
+
+# Variables are typed inputs, not mutable local variables.
+# Example variables: {"first": 3, "showNote": false, "id": "dune"}
+query ReadingList(
+  $first: Int! = 3
+  $showNote: Boolean! = true
+  $id: ID! = "dune"
+) {
+  # Aliases distinguish two calls to the same schema field.
+  fiction: books(category: FICTION, first: $first) {
+    ...BookSummary
+    # Directives conditionally select data; they do not create loops.
+    note @include(if: $showNote)
+  }
+
+  science: books(category: SCIENCE, first: $first) {
+    ...BookSummary
+    note @include(if: $showNote)
+  }
+
+  selected: book(id: $id) {
+    ...BookSummary
+    category
+  }
+}
+
+# Fragments reuse selections on a named schema type.
+fragment BookSummary on Book {
+  id
+  title
+  copies
+}
+
+# Select one operation by operationName when sending this document.
+# ReadingList uses the fragment above; SchemaName is independent.
+query SchemaName {
+  __typename
+}
+
+# Lists come from resolvers, not client-side collection constructors.
+# Request language functions cannot implement server behavior.
+# Query fields describe reads; this document contains no mutations.
