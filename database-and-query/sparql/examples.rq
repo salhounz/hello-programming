@@ -1,0 +1,58 @@
+# SPARQL 1.1: a read-only report requiring no external RDF data.
+PREFIX ex: <https://example.org/books/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT
+    ?book
+    ?title
+    ?category
+    ?status
+    ?displayNote
+    ?label
+WHERE {
+    # VALUES is an inline table of solution bindings, not an array.
+    # IRIs identify books; literals have datatypes or language tags.
+    VALUES (?book ?title ?category ?copies ?note) {
+        (ex:dune "Dune"@en "fiction" 3 "reserved")
+        (ex:foundation "Foundation"@en "fiction" 0 UNDEF)
+        (ex:cosmos "Cosmos"@en "science" 5 UNDEF)
+        (ex:planets "The Planets"@en "science" 2 "new")
+    }
+
+    # Joining another inline table selects supported categories.
+    VALUES ?category {
+        "fiction"
+        "science"
+    }
+
+    # FILTER controls which solutions survive, not statement execution.
+    FILTER(?copies > 0)
+    FILTER(LANGMATCHES(LANG(?title), "en"))
+
+    # BIND names a derived value; it does not reassign ?copies.
+    BIND(
+        IF(?copies < 3, "limited", "available")
+        AS ?status
+    )
+
+    # UNDEF leaves a variable unbound. COALESCE supplies a fallback.
+    BIND(COALESCE(?note, "none") AS ?displayNote)
+
+    # Built-in functions transform RDF terms into display strings.
+    BIND(
+        CONCAT(UCASE(STR(?title)), " [", STR(?copies), "]")
+        AS ?label
+    )
+
+    # OPTIONAL enriches a row without requiring a matching note.
+    OPTIONAL {
+        VALUES (?book ?recommended) {
+            (ex:dune true)
+            (ex:cosmos true)
+        }
+    }
+    FILTER(!BOUND(?recommended) || ?recommended = true)
+}
+# Solution order must be requested explicitly.
+ORDER BY ?category DESC(?copies) ?book
+LIMIT 10

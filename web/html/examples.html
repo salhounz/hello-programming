@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A small reading club</title>
+</head>
+<body>
+  <!-- HTML describes content; it has no functions, variables, or loops. -->
+  <header>
+    <h1>A small reading club</h1>
+    <nav aria-label="Page sections">
+      <a href="#books">Books</a>
+      <a href="#preferences">Preferences</a>
+    </nav>
+  </header>
+  <main>
+    <section id="books" aria-labelledby="books-title">
+      <h2 id="books-title">This month's collection</h2>
+      <!-- Lists group repeated content without executing a loop. -->
+      <ul>
+        <li><strong>Web basics</strong> — available now</li>
+        <li><strong>Useful scripts</strong> — coming soon</li>
+      </ul>
+      <details>
+        <summary>How does the club work?</summary>
+        <p>Choose a book and share one thing you learned.</p>
+      </details>
+    </section>
+    <section id="preferences" aria-labelledby="preferences-title">
+      <h2 id="preferences-title">Try native form controls</h2>
+      <!-- No server: submit reloads this page with a query string. -->
+      <form method="get">
+        <p>
+          <label for="reader">Reader name</label>
+          <input id="reader" name="reader" value="Ada" required>
+        </p>
+        <p>
+          <label for="limit">Books per month</label>
+          <input id="limit" name="limit" type="number" min="1" max="5" value="2">
+        </p>
+        <p>
+          <label for="format">Preferred format</label>
+          <select id="format" name="format">
+            <option value="digital">Digital</option>
+            <option value="print">Print</option>
+          </select>
+        </p>
+        <label><input type="checkbox" name="reminders" value="yes"> Reminders</label>
+        <button type="submit">Try validation</button>
+      </form>
+    </section>
+  </main>
+  <footer><p>Your preferences are not saved by this static page.</p></footer>
+</body>
+</html>

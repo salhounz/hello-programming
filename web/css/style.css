@@ -1,0 +1,103 @@
+.hello::before {
+  content: "Hello, World!";
+}
+
+/*
+    Type Systems & Variables
+*/
+/* Custom properties hold token values resolved through the cascade; they are not typed local variables. */
+:root {
+  --accent-color: #2457a7;
+  --card-gap: 1rem;
+}
+.hello { color: var(--accent-color, navy); }
+
+/*
+    Control Flow Operations
+*/
+/* Media and feature queries conditionally apply styles; CSS has no general-purpose loop. */
+@media (min-width: 48rem) {
+  .hello { font-size: 1.5rem; }
+}
+@supports (display: grid) {
+  .example-grid { display: grid; }
+}
+
+/*
+    Execution Blocks
+*/
+/* A rule groups declarations for matched elements; it is not a function call or lexical scope. */
+.example-card {
+  padding: 1rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+}
+
+/*
+    Code Health & Documentation
+*/
+/* Use block comments for both short and multi-line documentation. */
+/* A short comment. */
+/*
+  A multi-line explanation of the styling intent.
+  CSS does not support nested block comments.
+*/
+
+/*
+    Built-In Collections
+*/
+/* Selector lists group targets; grid tracks and value lists are not runtime collections. */
+.example-card, .example-panel { box-sizing: border-box; }
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--card-gap);
+}
+
+/*
+    Data Mutability
+*/
+/* States and overrides change computed values; declarations are resolved by cascade rules. */
+.example-button { --button-color: #2457a7; color: var(--button-color); }
+.example-button:hover { --button-color: #17396e; }
+
+/*
+    Access & Encapsulation
+*/
+/* Naming conventions reduce collisions; selectors do not create private class members. */
+.profile-card__title { margin-block: 0 0.5rem; }
+.profile-card__body { line-height: 1.5; }
+
+/*
+    Design Paradigms & Patterns
+*/
+/* Reusable classes compose layout and presentation without duplicating whole components. */
+.stack > * + * { margin-block-start: 1rem; }
+.text-center { text-align: center; }
+
+/*
+    Memory Management
+*/
+/* The browser manages rendering resources; hiding content is not explicit deallocation. */
+.example-hidden { display: none; }
+.example-invisible { visibility: hidden; }
+
+/*
+    Concurrency & Parallelism
+*/
+/* Animations are scheduled by the browser; they do not promise a dedicated CPU thread. */
+@keyframes example-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .example-fade { animation: example-fade 200ms ease-out; }
+}
+
+/*
+    Performance Optimization
+*/
+/* Containment may limit layout and paint work but can change layout behavior; profile first. */
+.example-contained {
+  contain: layout paint;
+}

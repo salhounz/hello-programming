@@ -1,0 +1,63 @@
+---
+// Copy into src/pages/examples.astro in an existing Astro project.
+// Frontmatter runs during rendering, not as browser event handlers.
+interface Book {
+  title: string;
+  read: boolean;
+  topics: string[];
+}
+
+const reader: string = "Ada";
+const onlyUnread: boolean = true;
+const books: Book[] = [
+  { title: "Web basics", read: true, topics: ["html", "css"] },
+  { title: "Useful scripts", read: false, topics: ["javascript"] },
+];
+const visible = books.filter((book) => !onlyUnread || !book.read);
+const topics = new Set(books.flatMap((book) => book.topics));
+
+function label(book: Book): string {
+  return `${book.title} (${book.read ? "read" : "next"})`;
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{reader}'s reading list</title>
+  </head>
+  <body>
+    <main>
+      <h1>{reader}'s reading list</h1>
+      <!-- Expressions produce HTML; no client JavaScript is needed here. -->
+      {visible.length > 0 ? (
+        <ul>
+          {visible.map((book) => (
+            <li class:list={{ finished: book.read }}>{label(book)}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>All caught up!</p>
+      )}
+      <p>Topics: {[...topics].join(", ")}</p>
+      <details>
+        <summary>About this page</summary>
+        <p>Edit the data in frontmatter to change the rendered list.</p>
+      </details>
+    </main>
+  </body>
+</html>
+
+<style>
+  main {
+    max-width: 36rem;
+    margin: 2rem auto;
+    padding: 1rem;
+    font-family: system-ui, sans-serif;
+  }
+  .finished {
+    text-decoration: line-through;
+  }
+</style>

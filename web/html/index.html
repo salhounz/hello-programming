@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello, World!</title>
+</head>
+<body>
+  <h1>Hello, World!</h1>
+
+<!--
+    Type Systems & Variables
+-->
+<!-- Attributes describe data and input constraints; they are not JavaScript variable declarations. -->
+<label for="quantity">Quantity</label>
+<input id="quantity" type="number" min="1" value="1">
+<p data-language="html">A custom data attribute stores text.</p>
+
+<!--
+    Control Flow Operations
+-->
+<!-- HTML has no loops or if statements; native controls provide declarative state. -->
+<details>
+  <summary>Show more</summary>
+  <p>This content is revealed by the built-in disclosure control.</p>
+</details>
+
+<!--
+    Execution Blocks
+-->
+<!-- Semantic elements group related content instead of executing statement blocks. -->
+<section aria-labelledby="structure-heading">
+  <h2 id="structure-heading">Document structure</h2>
+  <p>A section groups a topic.</p>
+</section>
+
+<!--
+    Code Health & Documentation
+-->
+<!-- Comments explain markup and cannot be nested; prefer meaningful visible structure. -->
+<!-- A single-line comment. -->
+<!--
+  A comment can span several lines.
+  Do not put secrets in comments: page source remains visible.
+-->
+
+<!--
+    Built-In Collections
+-->
+<!-- Lists and tables represent collections of content; they are not mutable runtime containers. -->
+<ul>
+  <li>Red</li>
+  <li>Blue</li>
+</ul>
+<table>
+  <caption>Inventory</caption>
+  <tr><th scope="col">Item</th><th scope="col">Count</th></tr>
+  <tr><td>Apples</td><td>3</td></tr>
+</table>
+
+<!--
+    Data Mutability
+-->
+<!-- Form controls have changeable state; DOM updates require browser behavior or scripts. -->
+<label for="display-name">Name</label>
+<input id="display-name" name="display-name" value="Ada">
+<p>Typing changes the input value; this paragraph stays the same.</p>
+
+<!--
+    Access & Encapsulation
+-->
+<!-- IDs and classes identify elements; HTML provides no private fields or access modifiers. -->
+<article class="card" aria-labelledby="card-title">
+  <h2 id="card-title">A reusable card</h2>
+  <p>Keep public content and behavior understandable.</p>
+</article>
+
+<!--
+    Design Paradigms & Patterns
+-->
+<!-- Semantic composition combines small elements with appropriate roles. -->
+<nav aria-label="Example navigation">
+  <a href="#structure-heading">Document structure</a>
+</nav>
+
+<!--
+    Memory Management
+-->
+<!-- The browser owns DOM memory; hidden content stays in the DOM and is not deallocated. -->
+<p hidden>This is hidden from normal presentation, not freed from memory.</p>
+
+<!--
+    Concurrency & Parallelism
+-->
+<!-- HTML does not create threads; deferred scripts can run after parsing completes. -->
+<p>For external scripts, use defer when execution should wait until parsing completes.</p>
+<!-- Example when app.js exists: <script defer src="app.js"></script> -->
+
+<!--
+    Performance Optimization
+-->
+<!-- Avoid unnecessary markup and reserve dimensions for media to reduce layout shifts. -->
+<p>Give images width and height; lazy-load offscreen images when appropriate.</p>
+<!-- Example when photo.jpg exists: <img src="photo.jpg" alt="A mountain" width="640" height="480" loading="lazy"> -->
+
+</body>
+</html>

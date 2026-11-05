@@ -1,0 +1,79 @@
+#
+#    Type Systems & Variables
+#
+# Operation variables declare schema input types; defaults are request values.
+# The active operation below declares $message as String!.
+# Example variable JSON: {"message": "Hello, World!"}
+
+#
+#    Control Flow Operations
+#
+# @include and @skip conditionally select fields using Boolean values.
+# Alternative operation:
+# query Conditional($show: Boolean! = true) {
+#   hello(message: "Hello, World!") @include(if: $show)
+# }
+
+#
+#    Execution Blocks
+#
+# A named operation groups the requested selection set.
+query Hello($message: String! = "Hello, World!") {
+  hello(message: $message)
+}
+
+#
+#    Code Health & Documentation
+#
+# GraphQL has # comments, not a dedicated multi-line comment delimiter.
+# A single-line comment.
+# Adjacent lines explain a longer request.
+
+#
+#    Built-In Collections
+#
+# List fields must be declared by the schema; the request selects their element fields.
+# Schema example: type Query { names: [String!]! }
+# Request for that different schema: query Names { names }
+
+#
+#    Data Mutability
+#
+# A mutation invokes schema-defined write behavior; query variables are not mutable local state.
+# Different schema required:
+# type Mutation { setName(name: String!): String! }
+# mutation Rename { setName(name: "Ada") }
+
+#
+#    Access & Encapsulation
+#
+# Selection sets limit returned data; authentication and authorization belong to the server.
+# Selecting hello does not grant access to fields the server protects.
+
+#
+#    Design Paradigms & Patterns
+#
+# Fragments reuse selections; aliases give response fields distinct names.
+# Alternative request using the same hello field:
+# query Aliased { greeting: hello(message: "Hello, World!") }
+
+#
+#    Memory Management
+#
+# Resolver implementations and the host runtime manage memory and other resources.
+# The request language has no allocation or free operation.
+
+#
+#    Concurrency & Parallelism
+#
+# Query-field scheduling is implementation-dependent; top-level mutation fields execute serially.
+# Independent query fields may be resolved concurrently by the server.
+# A query document does not create a CPU worker thread.
+
+#
+#    Performance Optimization
+#
+# Request only necessary fields and use bounded pagination when the schema supports it.
+# Different schema required:
+# type Query { names(first: Int!): [String!]! }
+# query FirstNames { names(first: 10) }

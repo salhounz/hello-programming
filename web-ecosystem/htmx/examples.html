@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reading list fragments</title>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</head>
+<body>
+  <main>
+    <h1>Reading list</h1>
+    <!-- HTMX attributes configure requests; HTML is not a programming language. -->
+    <p>The host server supplies HTML fragments, not JSON.</p>
+    <form
+      action="/books"
+      method="get"
+      hx-get="/books"
+      hx-target="#results"
+      hx-swap="innerHTML"
+      hx-indicator="#loading"
+    >
+      <label for="query">Search titles</label>
+      <input
+        id="query"
+        name="q"
+        type="search"
+        placeholder="Try web"
+      >
+      <button type="submit">Search</button>
+    </form>
+    <!-- HTMX shows an indicator while its request is in flight. -->
+    <span id="loading" class="htmx-indicator" role="status">Loading...</span>
+    <section aria-labelledby="results-title">
+      <h2 id="results-title">Results</h2>
+      <div id="results" aria-live="polite">
+        <p>Submit a search to load books.</p>
+      </div>
+    </section>
+    <button
+      type="button"
+      hx-get="/books?q="
+      hx-target="#results"
+      hx-swap="innerHTML"
+      hx-indicator="#loading"
+    >Show all books</button>
+    <details>
+      <summary>Response contract</summary>
+      <p>GET /books?q=web returns a list containing matching titles.</p>
+      <p>An empty match returns a paragraph saying no books were found.</p>
+      <p>The backend handles filtering and escapes titles before rendering.</p>
+    </details>
+  </main>
+</body>
+</html>
